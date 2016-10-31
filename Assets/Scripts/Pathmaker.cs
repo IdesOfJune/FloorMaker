@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement; 
+using UnityEngine.UI; 
 
 public class Pathmaker : MonoBehaviour {
 
@@ -15,6 +16,11 @@ public class Pathmaker : MonoBehaviour {
 	public float minRange; //default .25
 	public float maxRange; //default .50
 	float spawnChance; //default .95 
+	public GameObject HitR; 
+	public bool canPlayAgain; 
+
+	//variables regarding reset
+	public int newVariable; 
 
 	//variables regarding arrays 
 
@@ -24,6 +30,8 @@ public class Pathmaker : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		HitR.SetActive (false); 
+
 		index = Random.Range (0, pickFromTiles.Length); 
 
 		localCounter = Random.Range (0, 85); 
@@ -32,12 +40,15 @@ public class Pathmaker : MonoBehaviour {
 		spawnChance = Random.Range (.90f, .97f); 
 		//Debug.Log ("my spawnChance is" + spawnChance); //different spawn chances for each Pathmaker to create another one 
 
+		noOfTiles = newVariable; 
+
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+		newVariable = noOfTiles; 
 
 		if (noOfTiles < 550) {
 				float randNum = Random.Range (0f, 1f); 
@@ -60,8 +71,10 @@ public class Pathmaker : MonoBehaviour {
 
 			else if(counter > localCounter || noOfTiles == 550) {
 
-			Destroy (gameObject); 
+			gameObject.SetActive(false); 
 			Debug.Log ("destroyed!"); 
+
+			HitR.SetActive(true); 
 			//Debug.Log (noOfTiles); 
 				} //end else if bracket
 			
@@ -78,9 +91,13 @@ public class Pathmaker : MonoBehaviour {
 
 	} //spawnPickedTile bracket 
 
+	void ToggleCanPlay () {
+
+	
+
+	}
+
 
 } //end whole thing 
 
-//		Instantiate (floorPrefab, pathmakerSpherePrefab.position, pathmakerSpherePrefab.rotation); 
-//		pathmakerSpherePrefab.transform.Translate (0, 0, 5f); 
-//		counter++; 
+
